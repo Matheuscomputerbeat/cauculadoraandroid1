@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     buttons.forEach(button => {
         button.addEventListener('click', function () {
-            const buttonText = this.textContent; // Obter o texto do botão
+            const buttonText = this.textContent;
             if (!isNaN(buttonText) || buttonText === '.') {
                 handleNumber(buttonText);
             } else {
