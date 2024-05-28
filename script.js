@@ -34,9 +34,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 updateDisplay(currentInput);
                 break;
             case 'percent':
-            if (currentInput !== '') {
-                const percentValue = parseFloat(currentInput) * 0.01;
-                currentInput = (parseFloat(firstNumber) * percentValue).toString();
+            if (firstNumber !== null) {
+                const percentValue = parseFloat(currentInput) / 100;
+                currentInput = (parseFloat(firstNumber) - (parseFloat(firstNumber) * percentValue)).toString();
                 updateDisplay(currentInput);
             }
             break;
