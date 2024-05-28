@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!isNaN(buttonText) || buttonText === '.') {
                 handleNumber(buttonText);
             } else {
-                handleOperator(buttonText);
+                handleOperator(button.getAttribute('data-action'));
             }
         });
     });
