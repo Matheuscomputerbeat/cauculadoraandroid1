@@ -2,10 +2,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const display = document.getElementById('display');
     const buttons = document.querySelectorAll('.btn');
 
-    let currentInput = '';
-    let operator = '';
-    let firstNumber = '';
-    let secondNumber = '';
+    let currentInput = '0';
+    let operator = null;
+    let firstNumber = null;
+    let secondNumber = null;
 
     buttons.forEach(button => {
         button.addEventListener('click', function () {
@@ -38,22 +38,28 @@ document.addEventListener('DOMContentLoaded', function () {
                 updateDisplay(currentInput);
                 break;
             case 'equals':
-                if (operator && firstNumber !== '' && currentInput !== '') {
+                if (operator && firstNumber !== null && currentInput !== '') {
                     secondNumber = currentInput;
                     currentInput = calculate(firstNumber, secondNumber, operator).toString();
-                    operator = '';
-                    firstNumber = '';
+                    operator = null;
+                    firstNumber = null;
                     updateDisplay(currentInput);
                 }
                 break;
-            default:
+            case 'add':
+            case 'subtract':
+            case 'multiply':
+            case 'divide':
                 handleDefaultOperator(op);
+                break;
+            default:
+                // Lidar com outros botões (se necessário)
                 break;
         }
     }
 
     function handleDefaultOperator(op) {
-        if (firstNumber === '') {
+        if (firstNumber === null) {
             firstNumber = currentInput;
             operator = op;
             currentInput = '';
@@ -68,9 +74,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function clearCalculator() {
         currentInput = '0';
-        operator = '';
-        firstNumber = '';
-        secondNumber = '';
+        operator = null;
+        firstNumber = null;
+        secondNumber = null;
         updateDisplay(currentInput);
     }
 
