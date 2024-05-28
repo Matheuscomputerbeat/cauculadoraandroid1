@@ -46,14 +46,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     updateDisplay(currentInput);
                 }
                 break;
-            case 'add':
-            case 'subtract':
-            case 'multiply':
-            case 'divide':
-                handleDefaultOperator(op);
-                break;
             default:
-                // Lidar com outros botões (se necessário)
+                handleDefaultOperator(op);
                 break;
         }
     }
