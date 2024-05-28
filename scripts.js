@@ -9,11 +9,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     buttons.forEach(button => {
         button.addEventListener('click', function () {
-            const action = this.getAttribute('data-action');
-            if (!isNaN(action) || action === '.') {
-                handleNumber(action);
+            const buttonText = this.textContent; // Obter o texto do botão
+            if (!isNaN(buttonText) || buttonText === '.') {
+                handleNumber(buttonText);
             } else {
-                handleOperator(action);
+                handleOperator(buttonText);
             }
         });
     });
