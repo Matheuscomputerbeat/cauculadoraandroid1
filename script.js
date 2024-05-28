@@ -27,11 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function handleOperator(op) {
         switch (op) {
             case 'clear':
-                currentInput = '0';
-                operator = '';
-                firstNumber = '';
-                secondNumber = '';
-                updateDisplay(currentInput);
+                clearCalculator();
                 break;
             case 'backspace':
                 currentInput = currentInput.slice(0, -1) || '0';
@@ -51,19 +47,31 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
                 break;
             default:
-                if (firstNumber === '') {
-                    firstNumber = currentInput;
-                    operator = op;
-                    currentInput = '';
-                } else if (operator) {
-                    secondNumber = currentInput;
-                    currentInput = calculate(firstNumber, secondNumber, operator).toString();
-                    operator = op;
-                    firstNumber = currentInput;
-                    currentInput = '';
-                }
+                handleDefaultOperator(op);
                 break;
         }
+    }
+
+    function handleDefaultOperator(op) {
+        if (firstNumber === '') {
+            firstNumber = currentInput;
+            operator = op;
+            currentInput = '';
+        } else if (operator) {
+            secondNumber = currentInput;
+            currentInput = calculate(firstNumber, secondNumber, operator).toString();
+            operator = op;
+            firstNumber = currentInput;
+            currentInput = '';
+        }
+    }
+
+    function clearCalculator() {
+        currentInput = '0';
+        operator = '';
+        firstNumber = '';
+        secondNumber = '';
+        updateDisplay(currentInput);
     }
 
     function updateDisplay(value) {
