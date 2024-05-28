@@ -34,9 +34,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 updateDisplay(currentInput);
                 break;
             case 'percent':
-                currentInput = (parseFloat(currentInput) / 100).toString();
+            if (currentInput !== '') {
+                const percentValue = parseFloat(currentInput) * 0.01;
+                currentInput = (parseFloat(firstNumber) * percentValue).toString();
                 updateDisplay(currentInput);
-                break;
+            }
+            break;
             case 'equals':
                 if (operator && firstNumber !== null && currentInput !== '') {
                     secondNumber = currentInput;
