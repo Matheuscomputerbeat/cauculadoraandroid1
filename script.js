@@ -1,11 +1,13 @@
 document.addEventListener('DOMContentLoaded', function () {
     const display = document.getElementById('display');
     const buttons = document.querySelectorAll('.btn');
+    const history = document.getElementById('history');
 
     let currentInput = '0';
     let operator = null;
     let firstNumber = null;
     let secondNumber = null;
+    let historyEntries = [];
 
     buttons.forEach(button => {
         button.addEventListener('click', function () {
@@ -34,16 +36,18 @@ document.addEventListener('DOMContentLoaded', function () {
                 updateDisplay(currentInput);
                 break;
             case 'percent':
-            if (firstNumber !== null) {
-                const percentValue = parseFloat(currentInput) / 100;
-                currentInput = (parseFloat(firstNumber) - (parseFloat(firstNumber) * percentValue)).toString();
-                updateDisplay(currentInput);
-            }
-            break;
+                if (firstNumber !== null) {
+                    const percentValue = parseFloat(currentInput) / 100;
+                    currentInput = (parseFloat(firstNumber) - (parseFloat(firstNumber) * percentValue)).toString();
+                    updateDisplay(currentInput);
+                }
+                break;
             case 'equals':
                 if (operator && firstNumber !== null && currentInput !== '') {
                     secondNumber = currentInput;
-                    currentInput = calculate(firstNumber, secondNumber, operator).toString();
+                    const result = calculate(firstNumber, secondNumber, operator).toString();
+                    addHistoryEntry(firstNumber, secondNumber, operator, result);
+                    currentInput = result;
                     operator = null;
                     firstNumber = null;
                     updateDisplay(currentInput);
@@ -68,9 +72,10 @@ document.addEventListener('DOMContentLoaded', function () {
             currentInput = '';
         } else if (operator) {
             secondNumber = currentInput;
-            currentInput = calculate(firstNumber, secondNumber, operator).toString();
+            const result = calculate(firstNumber, secondNumber, operator).toString();
+            addHistoryEntry(firstNumber, secondNumber, operator, result);
             operator = op;
-            firstNumber = currentInput;
+            firstNumber = result;
             currentInput = '';
         }
     }
@@ -81,6 +86,7 @@ document.addEventListener('DOMContentLoaded', function () {
         firstNumber = null;
         secondNumber = null;
         updateDisplay(currentInput);
+        clearHistory();
     }
 
     function updateDisplay(value) {
@@ -102,5 +108,27 @@ document.addEventListener('DOMContentLoaded', function () {
             default:
                 return num2;
         }
+    }
+
+    function addHistoryEntry(num1, num2, operator, result) {
+        const operatorSymbol = {
+            'add': '+',
+            'subtract': '-',
+            'multiply': '*',
+            'divide': '/'
+        }[operator];
+
+        const historyEntry = `${num1} ${operatorSymbol} ${num2} = ${result}`;
+        historyEntries.push(historyEntry);
+        updateHistoryDisplay();
+    }
+
+    function updateHistoryDisplay() {
+        history.innerHTML = historyEntries.join('<br>');
+    }
+
+    function clearHistory() {
+        historyEntries = [];
+        history.innerHTML = '';
     }
 });
