@@ -59,6 +59,20 @@ body {
     background-color: #e67e22;
 }
 
+.calculator-history {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: #f9f9f9;
+}
+
+.calculator-history div {
+    padding: 5px 0;
+    border-bottom: 1px solid #ddd;
+}
+
 @media (max-width: 600px) {
     .calculator-display {
         font-size: 2rem;
